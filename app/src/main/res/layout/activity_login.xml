@@ -122,6 +122,7 @@ android:layout_marginHorizontal="15dp"
             android:id="@+id/TextViewForgetPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#1351CF"
             android:text="Forget Your Password" />
 
          <Button
@@ -147,9 +148,10 @@ android:layout_marginHorizontal="15dp"
             android:layout_height="wrap_content"
             android:text="Don't have an account ?" />
         <TextView
-android:id="@+id/TextViewSignUp"
+            android:id="@+id/TextViewSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#1351CF"
             android:text="Sign Up" />
     </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>
