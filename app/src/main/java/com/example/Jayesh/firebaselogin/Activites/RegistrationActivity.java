@@ -17,6 +17,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class RegistrationActivity extends AppCompatActivity {
 EditText editName,editEmailId,editPassword,editCity,editPhone;
@@ -39,20 +44,25 @@ FirebaseAuth mAuth;
         editPassword = findViewById(R.id.EditPassword);
         editPhone = findViewById(R.id.EditMobile);
         mAuth = FirebaseAuth.getInstance();
-        EmailId = editEmailId.getText().toString();
-        pass = editPassword.getText().toString();
-        user=getUserData();
+
+
         SignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if (!EmailId.isEmpty()){
-                   if (!pass.isEmpty()){
-                           SignUp(EmailId,pass);
+                user=getUserData();
+                EmailId = editEmailId.getText().toString();
+                pass = editPassword.getText().toString();
+               if (!EmailId.equals("")){
+                   if (!pass.equals("")){
+                       Log.e("jay", "All OK");
+                           SignUp(pass,user);
                    }else {
-                       generateToast("Enter EmailId!!");
+                       Log.e("jay", "empty password");
+                       generateToast("Enter password!!");
                    }
                }else {
-                   generateToast("Enter Password!!");
+                   Log.e("jay", "empty Email");
+                   generateToast("Enter EmailId!!");
                }
             }
         });
@@ -84,22 +94,46 @@ FirebaseAuth mAuth;
 return null;
     }
 
-    private void SignUp(String emailId, String pass) {
-        mAuth.createUserWithEmailAndPassword(emailId, pass)
+    private void SignUp(String pass,User user) {
+        mAuth.createUserWithEmailAndPassword(user.getEmailId(), pass)
                 .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.e("register", "Register!!!"+user.toString());
-
+                            Log.e("jay", "Register!!!"+user.toString());
+                            String Uid = mAuth.getCurrentUser().getUid();
+                            Log.e("jay", "UID Is "+Uid);
+                            SaveUserDetails(Uid,user);
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.e("register", "createUserWithEmail:failure", task.getException());
+                            Log.e("jay", "createUserWithEmail:failure", task.getException());
 
 
                         }
                     }
                 });
+    }
+
+    private void SaveUserDetails(String uid, User user) {
+
+
+        Log.e("jay", "Inside SaveUser");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("Users");
+        DatabaseReference childRef = databaseReference.child(uid);
+        childRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.e("jay", "SaveUser OK..");
+                childRef.setValue(user);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("jay", "SaveUser Failed...");
+            }
+        });
+     //   databaseReference.child(uid).setValue(user);
     }
 
     private void generateToast(String msg) {
