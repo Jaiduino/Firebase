@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-
     tools:context=".Activites.LoginActivity">
 
 
@@ -37,7 +35,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="411dp"
-android:layout_marginHorizontal="15dp"
+        android:layout_marginHorizontal="15dp"
         android:layout_marginTop="9dp"
         android:layout_marginBottom="183dp"
         app:cardBackgroundColor="#FFFFFF"
@@ -57,7 +55,7 @@ android:layout_marginHorizontal="15dp"
             android:layout_height="wrap_content"
             android:text="Login"
             android:textSize="25dp"
-            android:layout_marginLeft="150dp"
+         android:layout_gravity="center_horizontal"
             android:textStyle="bold"
           />
 
