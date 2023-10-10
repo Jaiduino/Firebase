@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,6 +55,7 @@ FirebaseAuth mAuth;
                 pass = editPassword.getText().toString();
                if (!EmailId.equals("")){
                    if (!pass.equals("")){
+
                        Log.e("jay", "All OK");
                            SignUp(pass,user);
                    }else {
@@ -64,6 +66,12 @@ FirebaseAuth mAuth;
                    Log.e("jay", "empty Email");
                    generateToast("Enter EmailId!!");
                }
+            }
+        });
+        TextClickHere.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -107,6 +115,13 @@ return null;
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.e("jay", "createUserWithEmail:failure", task.getException());
+                            try {
+                                throw task.getException();
+                            }catch (FirebaseAuthUserCollisionException e){
+                                generateToast("Email already use");
+                            }catch (Exception e){
+                                generateToast("Something Went Wrong");
+                            }
 
 
                         }
@@ -126,6 +141,7 @@ return null;
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Log.e("jay", "SaveUser OK..");
                 childRef.setValue(user);
+                finish();
             }
 
             @Override

@@ -1,8 +1,10 @@
-package com.example.Jayesh.firebaselogin;
+package com.example.Jayesh.firebaselogin.Activites;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.Jayesh.firebaselogin.R;
 
 public class MainActivity extends AppCompatActivity {
 
