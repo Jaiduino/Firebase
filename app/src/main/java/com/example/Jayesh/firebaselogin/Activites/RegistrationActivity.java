@@ -17,12 +17,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class RegistrationActivity extends AppCompatActivity {
 EditText editName,editEmailId,editPassword,editCity,editPhone;
@@ -45,33 +39,21 @@ FirebaseAuth mAuth;
         editPassword = findViewById(R.id.EditPassword);
         editPhone = findViewById(R.id.EditMobile);
         mAuth = FirebaseAuth.getInstance();
-
-
+        EmailId = editEmailId.getText().toString();
+        pass = editPassword.getText().toString();
+        user=getUserData();
         SignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user=getUserData();
-                EmailId = editEmailId.getText().toString();
-                pass = editPassword.getText().toString();
-               if (!EmailId.equals("")){
-                   if (!pass.equals("")){
-
-                       Log.e("jay", "All OK");
-                           SignUp(pass,user);
+               if (!EmailId.isEmpty()){
+                   if (!pass.isEmpty()){
+                           SignUp(EmailId,pass);
                    }else {
-                       Log.e("jay", "empty password");
-                       generateToast("Enter password!!");
+                       generateToast("Enter EmailId!!");
                    }
                }else {
-                   Log.e("jay", "empty Email");
-                   generateToast("Enter EmailId!!");
+                   generateToast("Enter Password!!");
                }
-            }
-        });
-        TextClickHere.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
             }
         });
     }
@@ -102,54 +84,22 @@ FirebaseAuth mAuth;
 return null;
     }
 
-    private void SignUp(String pass,User user) {
-        mAuth.createUserWithEmailAndPassword(user.getEmailId(), pass)
+    private void SignUp(String emailId, String pass) {
+        mAuth.createUserWithEmailAndPassword(emailId, pass)
                 .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.e("jay", "Register!!!"+user.toString());
-                            String Uid = mAuth.getCurrentUser().getUid();
-                            Log.e("jay", "UID Is "+Uid);
-                            SaveUserDetails(Uid,user);
+                            Log.e("register", "Register!!!"+user.toString());
+
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.e("jay", "createUserWithEmail:failure", task.getException());
-                            try {
-                                throw task.getException();
-                            }catch (FirebaseAuthUserCollisionException e){
-                                generateToast("Email already use");
-                            }catch (Exception e){
-                                generateToast("Something Went Wrong");
-                            }
+                            Log.e("register", "createUserWithEmail:failure", task.getException());
 
 
                         }
                     }
                 });
-    }
-
-    private void SaveUserDetails(String uid, User user) {
-
-
-        Log.e("jay", "Inside SaveUser");
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = database.getReference("Users");
-        DatabaseReference childRef = databaseReference.child(uid);
-        childRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.e("jay", "SaveUser OK..");
-                childRef.setValue(user);
-                finish();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("jay", "SaveUser Failed...");
-            }
-        });
-
     }
 
     private void generateToast(String msg) {
