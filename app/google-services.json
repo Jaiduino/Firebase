@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "202169550033",
+    "project_id": "fir-loginregistration-6d7a4",
+    "storage_bucket": "fir-loginregistration-6d7a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:202169550033:android:17ee7a7658a19941fbb1f0",
+        "android_client_info": {
+          "package_name": "com.example.Jayesh.firebaselogin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDg08enAfBb0uR2eyB5mGBLUlkTtdmgqQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

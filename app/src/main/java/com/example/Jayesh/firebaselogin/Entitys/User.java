@@ -1,60 +1,62 @@
 package com.example.Jayesh.firebaselogin.Entitys;
 
+import androidx.dynamicanimation.animation.SpringAnimation;
+
 public class User {
-    private String Name;
-    private String EmailId;
-    private String Mobile;
-    private String DateOfBirth;
+    private String name;
+    private String city;
+    private String emailId;
+    private String phone;
 
     public User() {
     }
 
-    public User(String name, String emailId, String mobile, String dateOfBirth) {
-        Name = name;
-        EmailId = emailId;
-        Mobile = mobile;
-        DateOfBirth = dateOfBirth;
+    public User(String name, String city, String emailId, String phone) {
+        this.name = name;
+        this.city = city;
+        this.emailId = emailId;
+        this.phone = phone;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getEmailId() {
-        return EmailId;
+        return emailId;
     }
 
     public void setEmailId(String emailId) {
-        EmailId = emailId;
+        this.emailId = emailId;
     }
 
-    public String getMobile() {
-        return Mobile;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setMobile(String mobile) {
-        Mobile = mobile;
-    }
-
-    public String getDateOfBirth() {
-        return DateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        DateOfBirth = dateOfBirth;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "Name='" + Name + '\'' +
-                ", EmailId='" + EmailId + '\'' +
-                ", Mobile='" + Mobile + '\'' +
-                ", DateOfBirth='" + DateOfBirth + '\'' +
+                "name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                ", emailId='" + emailId + '\'' +
+                ", phone='" + phone + '\'' +
                 '}';
     }
 }
