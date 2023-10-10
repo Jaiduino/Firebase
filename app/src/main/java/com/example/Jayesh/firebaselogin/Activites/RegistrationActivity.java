@@ -133,7 +133,7 @@ return null;
                 Log.e("jay", "SaveUser Failed...");
             }
         });
-     //   databaseReference.child(uid).setValue(user);
+
     }
 
     private void generateToast(String msg) {
